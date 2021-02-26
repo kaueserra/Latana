@@ -15,7 +15,7 @@ We ran a 3 wave, 3 country brand tracking study for a B2C client in the technolo
 - An evaluation of your model’s performance.
 
 
-The problem stated to use certain demographics predict the probability of a person with some characteristics have knowledge about the brand, gender was not in the dataset and as gender it was cited on the problem and it is one major feature in any questionnaire, therefore my first understanding of the problem was:
+The problem stated to use certain demographics predict the probability of a person with some characteristics has knowledge about the brand, gender was not in the dataset and as gender it was cited on the problem and it is one major feature in any questionnaire, therefore my first understanding of the problem was:
 
 Create a model with only the demographic features and use gender. 
 
@@ -23,7 +23,7 @@ Then my first goals were:
 
 - identify hidden/latent gender behaviour in order to create this feature. 
         how I would do this: 
-        Using Latent Dirichlet Allocation [1], I could find a hidden binary feature that makes the other features have different distribuition,  
+        Using Latent Dirichlet Allocation [1], I could find a hidden binary feature that makes the other features have different distribution,  
         and I would use income ( as we live in a sexist world we could check the gender paying gap) to identify which is male or female in the  
         latent feature created.
       
@@ -53,10 +53,10 @@ Then my first goals were:
     
  - Missing data handling  
      Some data was merged making the missing disappear other data I used MICE [2], 
-     MICE is a missing data imputer which fills those points comparing simmilar rows regarding the other features and then imputing the missing one  
+     MICE is a missing data imputer which fills those points comparing similar rows regarding the other features and then imputing the missing one  
      
  - Data transformation 
-    I transformed all the categorical features in dummies (One hot enconded) and into numeric, to be adjusted to be use in any model 
+    I transformed all the categorical features in dummies (One hot encoded) and into numeric, to be adjusted to be use in any model 
    
      
  - Select features and create a baseline model 
@@ -64,19 +64,19 @@ Then my first goals were:
      With that also I had a first glance 
      
  - Still too many features, Dimensional Reduction  
-    I split the features I selected in the previous step in two, above 1% importace and below, only 17 features were above and over 100 were below. 
-    The first group I will use as it is, and the bigger group I created a component using Linear Discriminat Analysis [3], this means that I tried to transform      all the important information of the 100 features into a single one, and as all the features from  
-    the bigger group were categorical LDA is prefered instead of PCA.
+    I split the features I selected in the previous step in two, above 1% importance  and below, only 17 features were above and over 100 were below. 
+    The first group I will use as it is, and the bigger group I created a component using Linear Discriminant Analysis [3], this means that I tried to transform      all the important information of the 100 features into a single one, and as all the features from  
+    the bigger group were categorical LDA is preferred  instead of PCA.
     
  - Failed attempt 
-   In order to correct the imbalance I try to produce syntetic data to oversample using the SMOTE [4],  
+   In order to correct the imbalance I try to produce synthetic  data to oversample using the SMOTE [4],  
    however the prediction got worse, so I used the regular data
      
  - Models 
    So the final data used was the best 17 features which had feature importance above 1% and the component create with the Linear Discriminant analysis. 
    I tried Logistic Regression, Random Forest and LightGBM.  As the data was imbalanced I had to pay attention to the Macro F1-score to see which one was the      better model. 
    
-   And after a few runs the best model was the Random Forest, initially was overfitting due not having a sizeble minimum size leaf, after this, still have some     overfit but not as in the beginning. As lightGBM is fast to run and the results were close to Random Forest, I decided to tune the hyperparameters, however 
+   And after a few runs the best model was the Random Forest, initially was overfitting due not having a sizable minimum size leaf, after this, still have some     overfit but not as in the beginning. As lightGBM is fast to run and the results were close to Random Forest, I decided to tune the hyperparameters, however 
    even tunning still lost for Random Forest which the performance can be seen below: 
    
    -*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-
@@ -114,18 +114,18 @@ At Dalia we use MRP to build models that enable our clients to get highly accura
 
 - What kind of challenges can you anticipate for building such a model?  
 - 
-  As we have a combination of 176,256 cells. We might have sparcity in our model as we will not have enough members for each cell,  
-  furthermore averaging the few members of a cell might build a sampling bias, that means that few respondants might "answer" for a whole group.
+  As we have a combination of 176,256 cells. We might have sparsity  in our model as we will not have enough members for each cell,  
+  furthermore averaging the few members of a cell might build a sampling bias, that means that few respondents might "answer" for a whole group.
 
  - What limitations and capabilities would you think such a model would have? 
   
-  Poststratifying showed innacurate in the election Biden x Trump 2020, as some republicans or groups of people were avoiding answering polls [5] , 
+  Poststratifying showed inaccurate  in the election Biden x Trump 2020, as some republicans or groups of people were avoiding answering polls [5] , 
   which almost made a "quantum effect" those that answered/were seen had a different behaviour from those that did not.  
-  There must first prove that there is no bias on the respondants of certain group first before extrapolating.  
+  There must first prove that there is no bias on the respondents of certain group first before extrapolating.  
   
   Each new feature/demographic selected grows the number of groups exponentially.  
   
-  This model is great, but it would be even more usefull using the odds ratio of each feature to see the impact in the final vote or the binary studied choice 
+  This model is great, but it would be even more useful using the odds ratio of each feature to see the impact in the final vote or the binary studied choice 
   Also for the politics and the model itself it would be good to study cells which have high swings/volatility, which this model does not capture well.
   
  
